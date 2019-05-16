@@ -4,7 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 
-abstract class RunnerTask : DefaultTask() {
+abstract class VersionTask : DefaultTask() {
     @get:Input
-    abstract val kkk: Property<String>
+    abstract val versionName: Property<String>
 }
