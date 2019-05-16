@@ -1,8 +1,8 @@
 ### Plugins
 
-LibraryCommonPlugin: Used by lib1 and lib2
+LibraryCommonPlugin: Simple plugin encapsulating values for Android Lib configurations. Used by lib1 and lib2
 
-LibraryCommonPluginWithExtension: Used by lib3
+LibraryCommonPluginWithExtension: Plugin tying to use Property extensions to define the dsl. Used by lib3
 
 
 #### LibraryCommonPlugin
