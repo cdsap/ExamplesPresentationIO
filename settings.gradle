@@ -1,0 +1,2 @@
+include ':myapplication', ':lib1',':lib2', ':lib3'
+include 'buildSrc'
