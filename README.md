@@ -1,61 +1,15 @@
-### Plugins
+#
 
-LibraryCommonPlugin: Simple plugin encapsulating values for Android Lib configurations. Used by lib1 and lib2
-
-LibraryCommonPluginWithExtension: Plugin tying to use Property extensions to define the dsl. Used by lib3
+Code examples to the article 19 tips for Gradle in Android projects - 2019 Edition
 
 
-#### LibraryCommonPlugin
 
-Example use:
+* Example using dependencies in the `buildSrc` to be used in the build.gradle configuration
 
-```
-apply plugin: 'libraryCommonPlugin'
+* Example custom plugin to encapsulate Android Libraries
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-}
-```
+* Example Properties API
 
-#### LibraryCommonPlugin
+* Example Task dependencies with Properties
 
-For simplicity instead of updating the testRunner, I'm updating the versionName
-
-
-```
-apply plugin: "libraryCommonPluginWithExtension"
-
-commonLibrary {
-    versionName.set("1.1.2")
-}
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-}
-
-```
-
-Problem comes when I try to use the value defined in the extension:
-
-```
- is LibraryPlugin -> {
-                    val extension = target.extensions.getByType<LibraryExtension>()
-                    extension.configure()
-                    target.afterEvaluate {
-                        extension.defaultConfig.versionName = pluginWithExtension.versionName.get()
-                    }
-                }
-}
-```
-value is properly fetched but not assigned.
-
-I tried detaching the android library plugin and same result
+* Example Tasks implementing Worker API

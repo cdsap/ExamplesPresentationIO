@@ -1,6 +1,12 @@
+import com.task.TaskConsumer
+import com.task.TaskProducer
+import com.worker.CreateMD5
+import com.dependencies.Dependencies
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'talaiot'
 
 android {
     compileSdkVersion 28
@@ -30,10 +36,43 @@ dependencies {
     implementation(project(":lib1"))
     implementation(project(":lib2"))
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.31"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation Dependencies.kotlin
+    implementation Dependencies.appcompat
+    implementation Dependencies.constraintLayout
+    testImplementation Dependencies.junit
+    androidTestImplementation Dependencies.runner
+    androidTestImplementation Dependencies.espresso
 }
+
+def taskProducer = tasks.register("taskProducer", TaskProducer) {
+    output.set(new File(project.buildDir, "test.log"))
+}
+
+def artifact = taskProducer.flatMap { it.output }
+
+tasks.register("taskConsumer", TaskConsumer) {
+    input.set(artifact)
+    showFile()
+}
+
+tasks.register("md5", CreateMD5) {
+    destination = file("${buildDir}/md5")
+    source file("src/main/java")
+}
+
+talaiot {
+    publishers {
+        taskDependencyGraphPublisher {
+            html = true
+        }
+
+        influxDbPublisher {
+            dbName = "tracking"
+            url = "http://localhost:8086"
+            urlMetric = "tracking"
+
+        }
+
+    }
+}
+

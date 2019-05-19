@@ -11,7 +11,8 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.31")
-    implementation("com.android.tools.build:gradle:3.5.0-beta01")
+    implementation("com.android.tools.build:gradle:3.4.0")
+    implementation("com.cdsap:talaiot:0.2.0")
 }
 
 gradlePlugin {
@@ -19,10 +20,6 @@ gradlePlugin {
         register("LibraryCommonPlugin") {
             id = "libraryCommonPlugin"
             implementationClass = "com.plugin.LibraryCommonPlugin"
-        }
-        register("LibraryCommonPluginWithExtension") {
-            id = "libraryCommonPluginWithExtension"
-            implementationClass = "com.plugin.LibraryCommonPluginWithExtension"
         }
     }
 }
